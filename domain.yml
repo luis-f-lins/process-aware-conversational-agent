@@ -2,109 +2,69 @@ session_config:
   session_expiration_time: 60.0
   carry_over_slots_to_new_session: false
 intents:
-- flight_booked
-- request_todolist
-- tour_booked
-- booking_flight
-- transfer_booked
-- hotel_booked
-- booking_transfer
-- booking_hotel
-- booking_tour
-- choose
-- greet
-- mood_great
-- affirm
-- bot_challenge
-- bot_love
-- out_of_scope
-- goodbye
-- deny
-- mood_unhappy
-- something_booked
-- now_what
-entities:
-- flight_booked
-- hotel_booked
-- tour_booked
-- transfer_booked
-- wantsuggestion
-slots:
-  flight_booked:
-    type: bool
-    initial_value: false
-  hotel_booked:
-    type: bool
-    initial_value: false
-  tour_booked:
-    type: bool
-    initial_value: false
-  transfer_booked:
-    type: bool
-    initial_value: false
-  wantsuggestion:
-    type: unfeaturized
+  - book_flight
+  - book_hotel
+  - book_tour
+  - book_transfer
+  - start_process
+  - greet
+  - mood_great
+  - out_of_scope
+  - now_what
+  - goodbye
+  - affirm
+  - bot_challenge
+  - deny
+  - bot_love
+  - mood_unhappy
 templates:
-  utter_alldone:
-  - text: Okay. You're all done!
-  utter_book_flight:
-  - text: You should book the flight ticket first.
-  utter_book_flight_and_hotel:
-  - text: You need to book the flight ticket and the hotel first.
-  utter_book_hotel:
-  - text: You should book the hotel.
-  utter_book_tour:
-  - text: You should a bour.
-  utter_book_transfer:
-  - text: You should book a transfer.
   utter_botlove:
-  - text: I love being a bot. Thanks for asking! Do you like being a human?
+    - text: I love being a bot. Thanks for asking! Do you like being a human?
   utter_cheer_up:
-  - image: https://i.imgur.com/nGF1K8f.jpg
-    text: 'Here is something to cheer you up:'
+    - image: https://i.imgur.com/nGF1K8f.jpg
+      text: "Here is something to cheer you up:"
   utter_default_fallback:
-  - text: I'm sorry. I didn't understand what you said.
+    - text: I'm sorry. I didn't understand what you said.
   utter_did_that_help:
-  - text: Did that help you?
+    - text: Did that help you?
   utter_goodbye:
-  - text: Bye
+    - text: Bye
   utter_greet:
-  - text: Hey! How are you?
+    - text: Hey! How are you?
   utter_happy:
-  - text: Great, carry on!
+    - text: Great, carry on!
   utter_iamabot:
-  - text: I am a bot, powered by Rasa.
+    - text: I am a bot, powered by Rasa.
   utter_okay:
-  - text: Okay. I'll be waiting for you.
+    - text: Okay. I'll be waiting for you.
   utter_picktask:
-  - text: Okay. Pick any task you'd like.
+    - text: Okay. Pick any task you'd like.
   utter_sorry:
-  - text: Sorry, I'll try to do better next time!
-  utter_tasklist:
-  - text: You have to book a flight, book a hotel, book the transfer and the tours.
+    - text: Sorry, I'll try to do better next time!
+  utter_ask_userWantsToBookATransfer:
+    - text: Do you want to book a transfer?
+  utter_ask_flightDate:
+    - text: What is your flight date?
 actions:
-- flight_booked
-- hotel_booked
-- tour_booked
-- transfer_booked
-- utter_alldone
-- utter_book_flight
-- utter_book_flight_and_hotel
-- utter_book_hotel
-- utter_book_tour
-- utter_book_transfer
-- utter_botlove
-- utter_cheer_up
-- utter_default_fallback
-- utter_did_that_help
-- utter_goodbye
-- utter_greet
-- utter_happy
-- utter_iamabot
-- utter_okay
-- utter_picktask
-- utter_sorry
-- utter_tasklist
-- utter_wantsuggestion
-- whats_left
-- action_listen -->
+  - book_flight
+  - book_hotel
+  - book_tour
+  - book_transfer
+  - start_process
+  - whats_next
+  - utter_default_fallback
+  - utter_greet
+  - utter_happy
+  - ask_user
+  - user_wants_to_book_a_hotel
+  - user_wants_to_book_a_tour
+slots:
+  userWantsToBookATransfer:
+    auto_fill: false
+    type: unfeaturized
+  flightDate:
+      auto_fill: false
+      type: unfeaturized
+forms:
+  - askUser1_form
+  - askUser2_form

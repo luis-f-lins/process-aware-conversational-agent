@@ -74,18 +74,16 @@
 - sdfhsd
 - lol
 
-## intent:request_todolist
-- What do I have to do?
-- what do I have to do?
-- what's on my to do list?
-- is there anything to do now?
-- what are my tasks?
-- what should i do today?
-- whats to do?
-- whats to do
-- what's to do
+## intent:start_process
+- I want to plan a trip
+- I want to book a trip
+- I wanna plan a trip
+- I wanna book a trip
+- Hi, I'd like to book a trip
+- I need to book a trip
+- I need to travel
 
-## intent:flight_booked
+## intent:book_flight
 - I'm booking a flight
 - I'm gonna book a flight now
 - i'll book the flight
@@ -100,7 +98,7 @@
 - I'm all done with the flight
 - i've booked the flight
 
-## intent:hotel_booked
+## intent:book_hotel
 - I'm booking a hotel
 - I'm gonna book a hotel now
 - i'll book the hotel
@@ -115,7 +113,7 @@
 - I'm all done with the hotel
 - i've booked the hotel
 
-## intent:transfer_booked
+## intent:book_transfer
 - I'm booking a transfer
 - I'm gonna book the transfer now
 - i'll book the transfer
@@ -129,7 +127,7 @@
 - I'm all done with the transfer
 - i've booked the transfer
 
-## intent:tour_booked
+## intent:book_tour
 - I'm booking a tour
 - I'm gonna book a tour now
 - i'll book the tour
@@ -142,14 +140,6 @@
 - The tour is booked
 - I'm all done with the tour
 - i've booked the tour
-
-## intent:something_booked
-- I've booked it
-- All done
-- I'm done
-- Finished
-- Booked it
-- Booked
 
 ## intent:now_what
 - Now what
