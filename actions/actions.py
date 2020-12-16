@@ -49,6 +49,13 @@ def completeCurrentTaskWithPayload(postPayload):
     print(response.text)
     return
 
+def completeCurrentTaskWithoutPayload():
+    global currentTaskId 
+    url = 'http://localhost:8080/engine-rest/task/' + currentTaskId + '/complete'
+    response = requests.post(url, json={})
+    print(response.text)
+    return
+
 
 class AskUser1Form(FormAction):
     def name(self) -> Text:
@@ -179,12 +186,7 @@ class BookTransfer(Action):
         else:
             global currentTaskId 
             currentTaskId = availableTask['id']
-            postPayload = {}
-
-            url = 'http://localhost:8080/engine-rest/task/' + currentTaskId + '/complete'
-
-            response = requests.post(url, json=postPayload)
-            print(response.text)
+            completeCurrentTaskWithoutPayload()
 
         return []
 
@@ -210,12 +212,7 @@ class BookTour(Action):
         else:
             global currentTaskId 
             currentTaskId = availableTask['id']
-            postPayload = {}
-
-            url = 'http://localhost:8080/engine-rest/task/' + currentTaskId + '/complete'
-
-            response = requests.post(url, json=postPayload)
-            print(response.text)
+            completeCurrentTaskWithoutPayload()
 
         return []
 
@@ -247,7 +244,8 @@ class WhatsNext(Action):
             #     return [FollowupAction("ask_user_form")]
 
             # else:
+                print(i)
                 utteredMessage = '- ' + templates[i['taskDefinitionKey']]
                 dispatcher.utter_message(text=utteredMessage)
 
-        return []
+        return [FollowupAction("action_listen")]
