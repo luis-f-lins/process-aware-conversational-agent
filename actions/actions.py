@@ -1,3 +1,4 @@
+
 from rasa_sdk import Action
 from rasa_sdk.events import SlotSet, FollowupAction
 import json
@@ -32,7 +33,6 @@ class StartProcess(Action):
 
         response = requests.post(url, json=postPayload)
 
-        print(response.json())
         processInstanceId = response.json()['id']
         taskGetUrl = 'http://localhost:8080/engine-rest/task?processInstanceId=' + processInstanceId
         processInstanceGetUrl = 'http://localhost:8080/engine-rest/process-instance/' + \
@@ -42,24 +42,16 @@ class StartProcess(Action):
         return [AllSlotsReset()]
 
 
-def completeCurrentTaskWithPayload(postPayload):
+def completeCurrentTask(postPayload = {}):
     global currentTaskId 
     url = 'http://localhost:8080/engine-rest/task/' + currentTaskId + '/complete'
     response = requests.post(url, json=postPayload)
-    print(response.text)
-    return
-
-def completeCurrentTaskWithoutPayload():
-    global currentTaskId 
-    url = 'http://localhost:8080/engine-rest/task/' + currentTaskId + '/complete'
-    response = requests.post(url, json={})
-    print(response.text)
     return
 
 
-class AskUser1Form(FormAction):
+class AskFlightDate(FormAction):
     def name(self) -> Text:
-        return "askUser1_form"
+        return "ask_flight_date"
 
     @staticmethod
     def required_slots(tracker: Tracker) -> List[Text]:
@@ -81,13 +73,13 @@ class AskUser1Form(FormAction):
         postPayload = {"variables": {"flightDate": {
             "value": tracker.get_slot("flightDate")}}, "withVariablesInReturn": True}
 
-        completeCurrentTaskWithPayload(postPayload)
+        completeCurrentTask(postPayload)
 
         return [FollowupAction("whats_next")]
 
-class AskUser2Form(FormAction):
+class AskBookTransfer(FormAction):
     def name(self) -> Text:
-        return "askUser2_form"
+        return "ask_book_transfer"
 
     @staticmethod
     def required_slots(tracker: Tracker) -> List[Text]:
@@ -110,7 +102,7 @@ class AskUser2Form(FormAction):
         postPayload = {"variables": {"userWantsToBookATransfer": {
             "value": tracker.get_slot("userWantsToBookATransfer")}}, "withVariablesInReturn": True}
 
-        completeCurrentTaskWithPayload(postPayload)
+        completeCurrentTask(postPayload)
 
         return [FollowupAction("whats_next")]
 
@@ -137,7 +129,7 @@ class BookFlight(Action):
             global currentTaskId 
             currentTaskId = availableTask['id']
 
-            return [FollowupAction("askUser1_form")]
+            return [FollowupAction("ask_flight_date")]
 
 
 class BookHotel(Action):
@@ -162,7 +154,7 @@ class BookHotel(Action):
             global currentTaskId 
             currentTaskId = availableTask['id']
 
-            return [FollowupAction("askUser2_form")]
+            return [FollowupAction("ask_book_transfer")]
 
 
 class BookTransfer(Action):
@@ -186,7 +178,7 @@ class BookTransfer(Action):
         else:
             global currentTaskId 
             currentTaskId = availableTask['id']
-            completeCurrentTaskWithoutPayload()
+            completeCurrentTask()
 
         return []
 
@@ -212,7 +204,7 @@ class BookTour(Action):
         else:
             global currentTaskId 
             currentTaskId = availableTask['id']
-            completeCurrentTaskWithoutPayload()
+            completeCurrentTask()
 
         return []
 
@@ -221,31 +213,20 @@ class WhatsNext(Action):
     def name(self):
         return "whats_next"
 
-    def run(self, dispatcher, tracker, domain):
-        global templates
-        templates = {'book_flight': 'book a flight', 'book_hotel': 'book a hotel',
-                     'book_tour': 'book a tour', 'book_transfer': 'book a transfer'}
-
+    def run(self, dispatcher, tracker, domain):        
         jsonObj = requests.get(taskGetUrl).json()
 
         response = requests.get(processInstanceGetUrl)
-
         processStillExists = response.status_code
 
-        print(jsonObj)
-
-        if len(jsonObj) > 0:
-            dispatcher.utter_message(text='The available tasks are:')
-        elif (processStillExists == 404):
+        if (processStillExists == 404):
             dispatcher.utter_message(text='Congratulations! You\'re all done!')
 
-        for i in jsonObj:
-            # if i['description'] != None and "askUser" in i['description']:
-            #     return [FollowupAction("ask_user_form")]
+        elif len(jsonObj) > 0:
+            dispatcher.utter_message(text='The available tasks are:')
 
-            # else:
-                print(i)
-                utteredMessage = '- ' + templates[i['taskDefinitionKey']]
+            for i in jsonObj:
+                utteredMessage = '- ' + i['name']
                 dispatcher.utter_message(text=utteredMessage)
 
         return [FollowupAction("action_listen")]

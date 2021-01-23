@@ -1,0 +1,22 @@
+
+
+session_config:
+  session_expiration_time: 60.0
+  carry_over_slots_to_new_session: false
+intents:
+- greet
+- affirm
+- deny
+responses:
+  utter_default_fallback:
+  - text: I'm sorry. I didn't understand what you said.
+  utter_greet:
+  - text: Hi! I am the Process-Aware bot. How can I help you today?
+actions:
+- utter_default_fallback
+- utter_greet
+
+
+
+
+

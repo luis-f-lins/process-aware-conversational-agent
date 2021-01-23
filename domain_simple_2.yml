@@ -1,3 +1,5 @@
+
+
 session_config:
   session_expiration_time: 60.0
   carry_over_slots_to_new_session: false
@@ -11,22 +13,11 @@ intents:
 - book_transfer
 - start_process
 - now_what
-slots:
-  flightDate:
-    type: unfeaturized
-    auto_fill: false
-  userWantsToBookATransfer:
-    type: unfeaturized
-    auto_fill: false
 responses:
   utter_default_fallback:
   - text: I'm sorry. I didn't understand what you said.
   utter_greet:
   - text: Hi! I am the Process-Aware bot. How can I help you today?
-  utter_ask_userWantsToBookATransfer:
-  - text: Do you want to book a transfer?
-  utter_ask_flightDate:
-  - text: What is your flight date?
 actions:
 - utter_default_fallback
 - utter_greet
@@ -36,8 +27,5 @@ actions:
 - book_transfer
 - start_process
 - whats_next
-- utter_ask_flightDate
-- utter_ask_userWantsToBookATransfer
-forms:
-- ask_flight_date
-- ask_book_transfer
+
+
