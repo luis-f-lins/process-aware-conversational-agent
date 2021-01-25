@@ -20,7 +20,7 @@ slots:
     auto_fill: false
 responses:
   utter_default_fallback:
-  - text: I'm sorry. I didn't understand what you said.
+  - text: I'm sorry, I didn't understand. Can we try that again?
   utter_greet:
   - text: Hi! I am the Process-Aware bot. How can I help you today?
   utter_ask_userWantsToBookATransfer:
