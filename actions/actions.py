@@ -223,10 +223,11 @@ class WhatsNext(Action):
             dispatcher.utter_message(text='Congratulations! You\'re all done!')
 
         elif len(jsonObj) > 0:
-            dispatcher.utter_message(text='The available tasks are:')
+            messageToUtter = 'The available tasks are:\n'
 
             for i in jsonObj:
-                utteredMessage = '- ' + i['name']
-                dispatcher.utter_message(text=utteredMessage)
+                messageToUtter = messageToUtter + '- ' + i['name'] + '\n'
+
+            dispatcher.utter_message(text=messageToUtter)
 
         return [FollowupAction("action_listen")]
