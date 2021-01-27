@@ -10,9 +10,9 @@ Millions of people execute processes every day. Processes are intrinsic to our p
 This project is a conversational agent that uses Rasa as the main framework for building the chatbot, and Camunda Engine for process management. Camunda will be responsible for making sure the process execution follows the right sequences, and tracking the current state of the process at any given time.
 
 This project was built using specific versions of each framework, and it is not guaranteed to work with any other versions. They are:
-- Rasa 1.8.2, 
+- Rasa 1.8.2
 - Rasa SDK 1.8.0
-- Camunda Modeler 3.4.1. 
+- Camunda Modeler 3.4.1
 
 ## Instructions for execution
 
